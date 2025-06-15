@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold">Manajemen Petugas</h2>
+    <div></div>
+  </div>
+  <div class="mb-6">
+    <a href="/registrasi" class="block w-full md:w-auto text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg shadow transition">Tambah Petugas</a>
+  </div>
+  <div class="mb-4">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+  </div>
+  <div class="overflow-x-auto rounded-lg shadow">
+    <table id="myTable" class="min-w-full bg-white">
+      <thead>
+        <tr class="bg-gray-100 text-gray-700">
+          <th class="py-3 px-4 text-left">Person Id</th>
+          <th class="py-3 px-4 text-left">Name</th>
+          <th class="py-3 px-4 text-left">Email</th>
+          <th class="py-3 px-4 text-left">Level</th>
+          <th class="py-3 px-4 text-left">Added</th>
+          <th class="py-3 px-4 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in data %}
+        <tr class="border-b hover:bg-gray-50">
+          <td class="py-2 px-4">{{item[0]}}</td>
+          <td class="py-2 px-4">{{item[1]}}</td>
+          <td class="py-2 px-4">{{item[2]}}</td>
+          <td class="py-2 px-4">
+            {% if item[3] == 'Admin' %}
+              <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full">Admin</span>
+            {% elif item[3] == 'Petugas' %}
+              <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">Petugas</span>
+            {% else %}
+              <span class="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">Karyawan</span>
+            {% endif %}
+          </td>
+          <td class="py-2 px-4">{{item[4]}}</td>
+          <td class="py-2 px-4 flex gap-2">
+            <a href="/editadmin/{{item[0]}}" class="inline-flex items-center justify-center w-8 h-8 rounded hover:bg-gray-200 text-blue-600" title="Edit">
+               <i class="fas fa-edit"></i>
+            </a>
+            <a href="/deleteadmin/{{item[0]}}" class="inline-flex items-center justify-center w-8 h-8 rounded hover:bg-gray-200 text-red-600" title="Delete" onclick="return confirm('Yakin ingin menghapus?')">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 1; i < tr.length; i++) { // mulai dari 1 agar header tidak ikut
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+{% endblock %}

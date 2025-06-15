@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4" style="max-width:600px;">
+  <h3>Selamat Datang, {{ user[0] }}</h3>
+  <table class="table">
+    <tr>
+      <th>Username</th>
+      <td>{{ user[0] }}</td>
+    </tr>
+    <tr>
+      <th>Email</th>
+      <td>{{ user[1] }}</td>
+    </tr>
+    <tr>
+      <th>Role</th>
+      <td>{{ user[2] }}</td>
+    </tr>
+    <tr>
+      <th>Tanggal Registrasi</th>
+      <td>{{ user[3].strftime('%d-%m-%Y %H:%M') if user[3] else '-' }}</td>
+    </tr>
+  </table>
+  <a href="{{ url_for('riwayat_absensi') }}" class="btn btn-primary">Lihat Riwayat Absensi</a>
+  <a href="{{ url_for('riwayat_create') }}" class="btn btn-success">Isi Absensi Manual</a>
+</div>
+{% endblock %}
